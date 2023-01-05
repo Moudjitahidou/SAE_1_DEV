@@ -1,0 +1,19 @@
+{
+  "textureAtlas": {
+    "texture": "perso.png",
+    "regionWidth": 50,
+    "regionHeight": 74
+  },
+  "cycles": {
+    "frames1": {
+      "frames": [72,73,74],
+      "isLooping": false,
+      "frameDuration": 0.1
+    },
+    "frames2": {
+      "frames": [62,61,60],
+      "isLooping": false,
+      "frameDuration": 0.2
+    }
+  }
+}
