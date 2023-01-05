@@ -19,8 +19,10 @@ namespace Project1
         private KeyboardState _keyboardState;
 
         private Vector2 _positionPerso;
+        private Vector2 _positionPerso1;
         private AnimatedSprite _perso;
-        
+        private AnimatedSprite _perso1;
+
         private int _sensPerso;
         private int _vitessePerso;
         float deltaSeconds;
@@ -37,6 +39,7 @@ namespace Project1
             // TODO: Add your initialization logic here
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _positionPerso = new Vector2(20, 340);
+            _positionPerso1 = new Vector2(10, 350);
             _vitessePerso = 100;
 
             base.Initialize();
@@ -51,6 +54,7 @@ namespace Project1
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ALLSTARSspritesheet.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
+            _perso1 = new AnimatedSprite(spriteSheet);
         }
 
         protected override void Update(GameTime gameTime)
@@ -62,10 +66,28 @@ namespace Project1
             deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
 
-            _tiledMapRenderer.Update(gameTime);
+            if(_keyboardState.IsKeyDown(Keys.Right) || (_keyboardState.IsKeyDown(Keys.Left)) || (_keyboardState.IsKeyDown(Keys.Up)) || (_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                _tiledMapRenderer.Update(gameTime);
+                _perso.Play("blue_breathing"); // une des animations définies dans « persoAnimation.sf »
+                _perso.Update(deltaSeconds); // time écoulé
+                J2Deplacement();
+            }
+
+            if (_keyboardState.IsKeyDown(Keys.S) || _keyboardState.IsKeyDown(Keys.F) || (_keyboardState.IsKeyDown(Keys.E)) || _keyboardState.IsKeyDown(Keys.V))
+            {
+                _tiledMapRenderer.Update(gameTime);
+                _perso1.Play("red_breathing"); // une des animations définies dans « persoAnimation.sf »
+                _perso1.Update(deltaSeconds); // time écoulé
+                J1Deplacement();
+
+            }
+
+
+            /*_tiledMapRenderer.Update(gameTime);
             _perso.Play("blue_breathing"); // une des animations définies dans « persoAnimation.sf »
             _perso.Update(deltaSeconds); // time écoulé
-            Deplacement();
+            J2Deplacement();*/
 
             base.Update(gameTime);
         }
@@ -78,6 +100,7 @@ namespace Project1
             _tiledMapRenderer.Draw();
             _spriteBatch.Begin();
             _spriteBatch.Draw(_perso, _positionPerso);
+            _spriteBatch.Draw(_perso1, _positionPerso1);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -86,7 +109,7 @@ namespace Project1
         
         
         
-        public void Deplacement()
+        public void J2Deplacement()
         {
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
@@ -113,6 +136,33 @@ namespace Project1
 
             }
 
+        }
+        public void J1Deplacement()
+        {
+            if (_keyboardState.IsKeyDown(Keys.F) && !(_keyboardState.IsKeyDown(Keys.S)))
+            {
+                _sensPerso = 1;
+                _positionPerso1.X += _sensPerso * _vitessePerso * deltaSeconds;
+
+            }
+            else if (_keyboardState.IsKeyDown(Keys.S) && !_keyboardState.IsKeyDown(Keys.F))
+            {
+                _sensPerso = -1;
+                _positionPerso1.X += _sensPerso * _vitessePerso * deltaSeconds;
+
+            }
+            else if ((_keyboardState.IsKeyDown(Keys.E)) && !(_keyboardState.IsKeyDown(Keys.V)))
+            {
+                _sensPerso = -1;
+                _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
+
+            }
+            else if ((_keyboardState.IsKeyDown(Keys.V)) && !(_keyboardState.IsKeyDown(Keys.E)))
+            {
+                _sensPerso = 1;
+                _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
+
+            }
         }
     }
 }
