@@ -1,0 +1,49 @@
+{
+  "textureAtlas": {
+    "texture": "ALLSTARSspritesheet.png",
+    "regionWidth": 32,
+    "regionHeight": 32
+  },
+  "cycles": {
+    "blue_breathing": {
+      "frames": [5,12],
+      "isLooping": false,
+      "frameDuration": 0.5
+    },
+    "blue_normal_strike": {
+      "frames": [2,3,9,10],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "blue_super_strike": {
+      "frames": [0,1,7,8],
+      "isLooping": false,
+      "frameDuration": 0.1
+    },
+    "blue_super_fast": {
+      "frames": [4,11],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "red_breathing": {
+      "frames": [6,13],
+      "isLooping": false,
+      "frameDuration": 0.5
+    },
+    "red_normal_strike": {
+      "frames": [24,23,17,16],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "red_super_strike": {
+      "frames": [26,25,19,18],
+      "isLooping": false,
+      "frameDuration": 0.1
+    },
+    "red_super_fast": {
+      "frames": [21,14],
+      "isLooping": false,
+      "frameDuration": 0.15
+    }
+  }
+}

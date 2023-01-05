@@ -49,7 +49,7 @@ namespace Project1
             // TODO: use this.Content to load your game content here
             _tiledMap = Content.Load<TiledMap>("map_tennis");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("persoAnimation.sf", new JsonContentLoader());
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ALLSTARSspritesheet.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
         }
 
@@ -63,7 +63,7 @@ namespace Project1
             _keyboardState = Keyboard.GetState();
 
             _tiledMapRenderer.Update(gameTime);
-            _perso.Play("frames1"); // une des animations définies dans « persoAnimation.sf »
+            _perso.Play("blue_breathing"); // une des animations définies dans « persoAnimation.sf »
             _perso.Update(deltaSeconds); // time écoulé
             Deplacement();
 
