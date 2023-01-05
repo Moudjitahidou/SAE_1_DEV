@@ -35,7 +35,7 @@ namespace Project1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _tiledMap = Content.Load<TiledMap>("Map");
+            _tiledMap = Content.Load<TiledMap>("map_tennis");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
         }
 

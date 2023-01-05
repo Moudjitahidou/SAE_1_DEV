@@ -18,23 +18,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin elements.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:elements.png
-
-#begin elements.tsx
-/importer:TiledMapTilesetImporter
-/processor:TiledMapTilesetProcessor
-/build:elements.tsx
-
 #begin groundGravel.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -52,8 +35,8 @@
 /processor:TiledMapTilesetProcessor
 /build:groundGravel.tsx
 
-#begin terrain de jeu.tmx
+#begin map_tennis.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:terrain de jeu.tmx
+/build:map_tennis.tmx
 
