@@ -58,6 +58,7 @@ namespace Project1
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ALLSTARSspritesheet.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
             _perso1 = new AnimatedSprite(spriteSheet);
+            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour colision
         }
 
         protected override void Update(GameTime gameTime)
@@ -86,7 +87,7 @@ namespace Project1
 
             }
             
-            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("midline");///pour colision
+            
 
             //pour les colision
 
