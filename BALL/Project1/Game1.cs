@@ -96,7 +96,7 @@ namespace Project1
             String animation = "blue_breathing";
 
 
-            /*if (_keyboardState.IsKeyDown(Keys.Up))
+            if (_keyboardState.IsKeyDown(Keys.Up))
             {
                 _sensPerso = 1;
                 _perso.Play("blue_breathing");
@@ -105,18 +105,8 @@ namespace Project1
                 animation = "blue_breathing"; /// changer blue...
                 if (!IsCollision(tx, ty))
                     _positionPerso.Y -= walkSpeed;
-            }*/
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                _sensPerso = 1;
-                _perso.Play("blue_normal_strike");
-                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth + 1);
-                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
-                animation = "blue_normal_strike";
-                if (!IsCollision(tx, ty))
-                    _positionPerso.X += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
+            
             //////////////////
 
 
@@ -136,8 +126,6 @@ namespace Project1
 
             base.Draw(gameTime);
         }
-        
-        
         
         
         public void J2Deplacement()
