@@ -6,6 +6,7 @@ using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
+using System;
 
 namespace Project1
 {
@@ -22,6 +23,8 @@ namespace Project1
         private Vector2 _positionPerso1;
         private AnimatedSprite _perso;
         private AnimatedSprite _perso1;
+        
+        private TiledMapTileLayer mapLayer;//pour colision
 
         private int _sensPerso;
         private int _vitessePerso;
@@ -38,8 +41,8 @@ namespace Project1
         {
             // TODO: Add your initialization logic here
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            _positionPerso = new Vector2(20, 340);
-            _positionPerso1 = new Vector2(10, 350);
+            _positionPerso = new Vector2(250, 400);
+            _positionPerso1 = new Vector2(250, 60);
             _vitessePerso = 100;
 
             base.Initialize();
@@ -82,12 +85,27 @@ namespace Project1
                 J1Deplacement();
 
             }
+            
+            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("midline");///pour colision
+
+            //pour les colision
+
+            //float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
+            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
+            KeyboardState keyboardState = Keyboard.GetState();
+            String animation = "blu_breathing";
 
 
-            /*_tiledMapRenderer.Update(gameTime);
-            _perso.Play("blue_breathing"); // une des animations définies dans « persoAnimation.sf »
-            _perso.Update(deltaSeconds); // time écoulé
-            J2Deplacement();*/
+            if (_keyboardState.IsKeyDown(Keys.Up))
+            {
+                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight - 1);
+                animation = "blue_norrmal_strike"; /// changer blue...
+                if (!IsCollision(tx, ty))
+                    _positionPerso.Y -= walkSpeed;
+            }
+            //////////////////
+
 
             base.Update(gameTime);
         }
@@ -163,6 +181,16 @@ namespace Project1
                 _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
 
             }
+        }
+        private bool IsCollision(ushort x, ushort y)
+        {
+            // définition de tile qui peut être null (?)
+            TiledMapTile? tile;
+            if (mapLayer.TryGetTile(x, y, out tile) == false)
+                return false;
+            if (!tile.Value.IsBlank)
+                return true;
+            return false;
         }
     }
 }
