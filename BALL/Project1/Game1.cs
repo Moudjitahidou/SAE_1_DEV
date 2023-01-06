@@ -58,6 +58,7 @@ namespace Project1
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ALLSTARSspritesheet.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
             _perso1 = new AnimatedSprite(spriteSheet);
+            
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour colision
         }
 
@@ -67,15 +68,21 @@ namespace Project1
                 Exit();
 
             // TODO: Add your update logic here
-            deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+             deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
+            _perso.Update(deltaSeconds);
+            //float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
+            //float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
+            KeyboardState keyboardState = Keyboard.GetState();
+            String animation = "ALLSTARSspritesheet.png";
 
-            if(_keyboardState.IsKeyDown(Keys.Right) || (_keyboardState.IsKeyDown(Keys.Left)) || (_keyboardState.IsKeyDown(Keys.Up)) || (_keyboardState.IsKeyDown(Keys.Down)))
+            if (_keyboardState.IsKeyDown(Keys.Right) || (_keyboardState.IsKeyDown(Keys.Left)) || (_keyboardState.IsKeyDown(Keys.Up)) || (_keyboardState.IsKeyDown(Keys.Down)))
             {
                 _tiledMapRenderer.Update(gameTime);
                 _perso.Play("blue_breathing"); // une des animations définies dans « persoAnimation.sf »
                 _perso.Update(deltaSeconds); // time écoulé
                 J2Deplacement();
+                PourColision("blue_normal_strike","blue_super_strike");
             }
 
             if (_keyboardState.IsKeyDown(Keys.S) || _keyboardState.IsKeyDown(Keys.F) || (_keyboardState.IsKeyDown(Keys.E)) || _keyboardState.IsKeyDown(Keys.V))
@@ -84,31 +91,10 @@ namespace Project1
                 _perso1.Play("red_breathing"); // une des animations définies dans « persoAnimation.sf »
                 _perso1.Update(deltaSeconds); // time écoulé
                 J1Deplacement();
+                PourColision("red_normal_strike","red_super_strike");
 
             }
             
-            //pour les colision
-
-            //float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
-
-            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
-            KeyboardState keyboardState = Keyboard.GetState();
-            String animation = "blue_breathing";
-
-
-            if (_keyboardState.IsKeyDown(Keys.Up))
-            {
-                _sensPerso = 1;
-                _perso.Play("blue_breathing");
-                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth+1);
-                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight );
-                animation = "blue_breathing"; /// changer blue...
-                if (!IsCollision(tx, ty))
-                    _positionPerso.Y -= walkSpeed;
-            }
-            
-            //////////////////
-
 
             base.Update(gameTime);
         }
@@ -126,61 +112,106 @@ namespace Project1
 
             base.Draw(gameTime);
         }
+        /// <summary>
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
         
-        
+ 
         public void J2Deplacement()
         {
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-            {
-                _sensPerso = 1;
+            {   _sensPerso = 1;
                 _positionPerso.X += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if ((_keyboardState.IsKeyDown(Keys.Left)) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                _sensPerso = -1;
+            {   _sensPerso = -1;
                 _positionPerso.X += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if ((_keyboardState.IsKeyDown(Keys.Up)) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                _sensPerso = -1;
+            {   _sensPerso = -1;
                 _positionPerso.Y += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if ((_keyboardState.IsKeyDown(Keys.Down)) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                _sensPerso = 1;
+            {   _sensPerso = 1;
                 _positionPerso.Y += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
 
         }
         public void J1Deplacement()
         {
             if (_keyboardState.IsKeyDown(Keys.F) && !(_keyboardState.IsKeyDown(Keys.S)))
-            {
-                _sensPerso = 1;
+            {                _sensPerso = 1;
                 _positionPerso1.X += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if (_keyboardState.IsKeyDown(Keys.S) && !_keyboardState.IsKeyDown(Keys.F))
-            {
-                _sensPerso = -1;
+            {                _sensPerso = -1;
                 _positionPerso1.X += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if ((_keyboardState.IsKeyDown(Keys.E)) && !(_keyboardState.IsKeyDown(Keys.V)))
-            {
-                _sensPerso = -1;
+            {               _sensPerso = -1;  
                 _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
-
             }
             else if ((_keyboardState.IsKeyDown(Keys.V)) && !(_keyboardState.IsKeyDown(Keys.E)))
+            {               _sensPerso = 1;
+                _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
+            }
+        }
+        public void PourColision(string normal,string super)
+        {
+            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
+            KeyboardState keyboardState = Keyboard.GetState();
+            //Console.WriteLine($"Position X : {_positionPerso.X} \nPosition Y : {_positionPerso.Y}");
+            String animation = "normal";
+
+            if (keyboardState.IsKeyDown(Keys.Up) && !_keyboardState.IsKeyDown(Keys.Down))
             {
                 _sensPerso = 1;
-                _positionPerso1.Y += _sensPerso * _vitessePerso * deltaSeconds;
+                //_perso.Play("super");
+                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight - 0.5);
+                animation = "super"; /// changer blue...
+                if (!IsCollision(tx, ty))
+                    _positionPerso.Y -= walkSpeed;
+                if (IsCollision(tx, ty))
+                    _positionPerso.Y += walkSpeed;
+            }
+            if (keyboardState.IsKeyDown(Keys.Down) && !_keyboardState.IsKeyDown(Keys.Up))
+            {
+                _sensPerso = 1;
+                //_perso.Play("super");
+                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight + 0.5);
+                animation = "super"; /// changer blue...
+                if (!IsCollision(tx, ty))
+                    _positionPerso.Y += walkSpeed;
+                if (IsCollision(tx, ty))
+                    _positionPerso.Y -= walkSpeed;
 
+            }
+            if (keyboardState.IsKeyDown(Keys.Left) && !_keyboardState.IsKeyDown(Keys.Right))
+            {
+                _sensPerso = 1;
+                //_perso.Play("super");
+                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth-1);
+                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                animation = "super"; /// changer blue...
+                if (!IsCollision(tx, ty))
+                    _positionPerso.X -= walkSpeed;
+                if (IsCollision(tx, ty))
+                    _positionPerso.X += walkSpeed;
+
+            }
+            if (keyboardState.IsKeyDown(Keys.Right) && !_keyboardState.IsKeyDown(Keys.Left))
+            {
+                _sensPerso = 1;
+                //_perso.Play("super");
+                ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth + 0.3);
+                ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                animation = "super"; /// changer blue...
+                if (!IsCollision(tx, ty))
+                    _positionPerso.X += walkSpeed;
+                if (IsCollision(tx, ty))
+                    _positionPerso.X -= walkSpeed;
             }
         }
         private bool IsCollision(ushort x, ushort y)
@@ -192,7 +223,8 @@ namespace Project1
             if (!tile.Value.IsBlank)
                 return true;
             return false;
-            //mapLayer.GetTile(x, y).GlobalIdentifier;
+            
         }
+        
     }
 }
