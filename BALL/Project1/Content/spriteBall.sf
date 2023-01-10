@@ -1,0 +1,14 @@
+{
+  "textureAtlas": {
+    "texture": "spriteBall.png",
+    "regionWidth": 120,
+    "regionHeight": 90
+  },
+  "cycles": {
+    "ballAnime": {
+      "frames": [],
+      "isLooping": false,
+      "frameDuration": 0.1
+    }
+  }
+}
