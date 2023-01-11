@@ -108,18 +108,35 @@ namespace Project1
             /////////////////////////////////////////////////////////////////////////////////////////////
             if (_keyboardState.IsKeyDown(Keys.Space))
             {
+                
                 _tiledMapRenderer.Update(gameTime);
                 _ball.Play("anime1");
                 _ball.Update(deltaSeconds);
                 _sensPerso = 1;
+
                 _positionBall.Y += _sensPerso * _vitessePerso * deltaSeconds;
-                ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
+
+                ushort bx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                ushort by = (ushort)(_positionPerso.Y / _tiledMap.TileHeight + 0.5);
+                if (BallCollision(bx, by))
+                    _positionBall.Y -= walkSpeed; /*1;*/
+                if (BallCollision(bx, by))
+                    _positionBall.Y += walkSpeed;
+                if (BallCollision(bx, by))
+                    _positionBall.X -= walkSpeed; /*1;*/
+                if (BallCollision(bx, by))
+                    _positionBall.X += walkSpeed;
+
+                
+
+
+                /*ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
                 //animation = "super"; /// changer blue...
                 if (!BallCollision(tx, ty))
-                    _positionBall.Y -= walkSpeed; /*1;*/
+                    _positionBall.Y -= walkSpeed;
                 if (BallCollision(tx, ty))
-                    _positionBall.Y += walkSpeed;
+                    _positionBall.Y += walkSpeed;*/
 
 
                 /*ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
@@ -130,8 +147,6 @@ namespace Project1
                     _positionBall.Y += walkSpeed;*/
             }
 
-
-           
             //////////////////////////////////////////////////////////////////////////////////////////////////
             base.Update(gameTime);
         }
