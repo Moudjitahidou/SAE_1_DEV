@@ -70,6 +70,7 @@ namespace Project1
             _perso = new AnimatedSprite(spriteSheet);
             _perso1 = new AnimatedSprite(spriteSheet);
             _ball = new AnimatedSprite(spriteBall);///////ball
+            var ballTexture= 
 
 
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour 
@@ -110,15 +111,23 @@ namespace Project1
                 _tiledMapRenderer.Update(gameTime);
                 _ball.Play("anime1");
                 _ball.Update(deltaSeconds);
-
                 _sensPerso = 1;
                 _positionBall.Y += _sensPerso * _vitessePerso * deltaSeconds;
                 ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
+                //animation = "super"; /// changer blue...
+                if (!BallCollision(tx, ty))
+                    _positionBall.Y -= walkSpeed; /*1;*/
+                if (BallCollision(tx, ty))
+                    _positionBall.Y += walkSpeed;
+
+
+                /*ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
+                ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
                 if (BallCollision(tx, ty))
                     _positionBall.Y -= walkSpeed; 
                 if (BallCollision(tx, ty))
-                    _positionBall.Y += walkSpeed;
+                    _positionBall.Y += walkSpeed;*/
             }
 
 
