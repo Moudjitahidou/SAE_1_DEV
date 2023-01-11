@@ -27,10 +27,10 @@ namespace Project1
         private AnimatedSprite _perso1;
         private AnimatedSprite _ball;///////ball
 
-
         private TiledMapTileLayer mapLayer;
         private TiledMapTileLayer mapLine;//pour colision
 
+        public static Random Hasard;///BALL.2
         private int _sensPerso;
         private int _vitessePerso;
         float deltaSeconds;
@@ -45,14 +45,14 @@ namespace Project1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Random d = new Random();///////ball
-            int y = d.Next(250, 500);
+           
+
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _positionPerso = new Vector2(250, 405);
             _positionPerso1 = new Vector2(250, 65);
-            _positionBall = new Vector2(250, y);///////ball
-
+           
             _vitessePerso = 100;
+            Hasard = new Random();
 
             base.Initialize();
         }
