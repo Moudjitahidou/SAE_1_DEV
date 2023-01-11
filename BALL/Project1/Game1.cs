@@ -50,6 +50,7 @@ namespace Project1
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _positionPerso = new Vector2(250, 405);
             _positionPerso1 = new Vector2(250, 65);
+            _positionBall = new Vector2(250, 200);
            
             _vitessePerso = 100;
             Hasard = new Random();
@@ -104,22 +105,24 @@ namespace Project1
                 PourColision1("red_normal_strike", "red_super_strike");
             }
             /////////////////////////////////////////////////////////////////////////////////////////////
-            _tiledMapRenderer.Update(gameTime);
-            _ball.Play("anime1");
-            _ball.Update(deltaSeconds);
-            if (_positionBall.X == _positionPerso.X || _positionBall.X == _positionPerso1.X)////ball( )
+            if (_keyboardState.IsKeyDown(Keys.Space))
             {
+                _tiledMapRenderer.Update(gameTime);
+                _ball.Play("anime1");
+                _ball.Update(deltaSeconds);
+
                 _sensPerso = 1;
                 _positionBall.Y += _sensPerso * _vitessePerso * deltaSeconds;
-                //String animation = "anime1";
                 ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
-                //animation = "anime1"; /// changer blue...
-                if (!IsCollision(tx, ty))
-                    _positionBall.Y -= walkSpeed; /*1;*/
-                if (IsCollision(tx, ty))
+                if (BallCollision(tx, ty))
+                    _positionBall.Y -= walkSpeed; 
+                if (BallCollision(tx, ty))
                     _positionBall.Y += walkSpeed;
             }
+
+
+           
             //////////////////////////////////////////////////////////////////////////////////////////////////
             base.Update(gameTime);
         }

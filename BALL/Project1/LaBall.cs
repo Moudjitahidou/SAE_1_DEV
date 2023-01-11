@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    internal class LaBall
+    internal class LaBall  
     {
          private float _timer = 1; // augmente la vitesse durant le temps
          private Vector2? _startPosition = null;
@@ -19,24 +19,30 @@ namespace Project1
          public float Speed;
 
          public int VitesseIncremenetation = 10;
-        public override void Update(Game gametime)
+
+
+        public void Update(Game gametime )
         {
             if (_startPosition == null)
             {
                 _startPosition = Position;
                 _startSpeed = Speed;
 
-               // Restart();  //crée une méthode commencement pour jouer
+                Restart();  //crée une méthode commencement pour jouer
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 _isPlaying = true;
+            if (!_isPlaying)///////////
+                return;
+
+            if (_timer > VitesseIncremenetation)
+            {
+                Speed++;
+                _timer = 0;
+            }
         }
 
-
-
-
-        
         public void Restart()
         {
 
@@ -63,5 +69,6 @@ namespace Project1
             _timer = 0;
             _isPlaying = false;
         }
+        
     }
 }
