@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseLibS.Num.Space;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
@@ -106,45 +107,51 @@ namespace Project1
                 PourColision1("red_normal_strike", "red_super_strike");
             }
             /////////////////////////////////////////////////////////////////////////////////////////////
+            Random Hasard = new Random();
+            
             if (_keyboardState.IsKeyDown(Keys.Space))
             {
-                
                 _tiledMapRenderer.Update(gameTime);
                 _ball.Play("anime1");
-                _ball.Update(deltaSeconds);
+                _ball.Update(2);
                 _sensPerso = 1;
 
-                _positionBall.Y += _sensPerso * _vitessePerso * deltaSeconds;
+                //_positionBall.Y += +_sensPerso * _vitessePerso * deltaSeconds;
 
-                ushort bx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                ushort by = (ushort)(_positionPerso.Y / _tiledMap.TileHeight + 0.5);
-                if (BallCollision(bx, by))
-                    _positionBall.Y -= walkSpeed; /*1;*/
-                if (BallCollision(bx, by))
-                    _positionBall.Y += walkSpeed;
-                if (BallCollision(bx, by))
-                    _positionBall.X -= walkSpeed; /*1;*/
-                if (BallCollision(bx, by))
-                    _positionBall.X += walkSpeed;
-
+                int x = Hasard.Next(60, 400);
+                _positionBall = new Vector2(x, Hasard.Next(10,450));
+                Vector2F deplacement = new Vector2F((float)0.02,(float)0.02);
+                ushort Mx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
+                ushort My = (ushort)(_positionBall.Y / _tiledMap.TileHeight + 0.5);
                 
+                //_positionBall.Y = _positionBall.Y+ deplacement.Y;
+                //BallCollision(Mx, My);
 
+                if (BallCollision(Mx, My) && _positionBall.X > Mx)
+                {
+                    _positionBall.X = _positionBall.X - deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    //deplacement.X = -deplacement.X;
+                    //_ball.Update(deltaSeconds);
 
-                /*ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
-                ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
-                //animation = "super"; /// changer blue...
-                if (!BallCollision(tx, ty))
-                    _positionBall.Y -= walkSpeed;
-                if (BallCollision(tx, ty))
-                    _positionBall.Y += walkSpeed;*/
+                }
+                if (BallCollision(Mx, My) && _positionBall.X < 0)
+                {
+                    _positionBall.X = _positionBall.X - deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    //deplacement.X = -deplacement.X;
+                    //_ball.Update(deltaSeconds);
+                }
+                if (BallCollision(Mx, My) && _positionBall.Y > My)
+                {
+                    _positionBall.Y = _positionBall.Y - deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    //deplacement.Y = -deplacement.Y;
+                    //_ball.Update(deltaSeconds);
+                }
+                if (BallCollision(Mx, My) && _positionBall.Y < 0)
+                {   //deplacement.Y = -deplacement.Y;
+                    _positionBall.Y = _positionBall.Y - deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    //_ball.Update(deltaSeconds);
+                }
 
-
-                /*ushort tx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
-                ushort ty = (ushort)(_positionBall.Y / _tiledMap.TileHeight - 0.5);
-                if (BallCollision(tx, ty))
-                    _positionBall.Y -= walkSpeed; 
-                if (BallCollision(tx, ty))
-                    _positionBall.Y += walkSpeed;*/
             }
 
             //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +343,6 @@ namespace Project1
             }
 
         }
-
         private bool IsCollision(ushort x, ushort y)
         {
             // définition de tile qui peut être null (?)
