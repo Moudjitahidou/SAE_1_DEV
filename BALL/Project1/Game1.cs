@@ -118,47 +118,34 @@ namespace Project1
             {
                 _tiledMapRenderer.Update(gameTime);
                 _ball.Play("anime1");
-                _ball.Update(2);
+                //_ball.Update(2);
                 _sensPerso = 1;
-
-                //_positionBall.Y += +_sensPerso * _vitessePerso * deltaSeconds;
 
                 int x = Hasard.Next(60, 400);
                 _positionBall = new Vector2(x, Hasard.Next(10,450));
                 Vector2F deplacement = new Vector2F((float)0.02,(float)0.02);
                 ushort Mx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
                 ushort My = (ushort)(_positionBall.Y / _tiledMap.TileHeight + 0.5);
-                
-                //_positionBall.Y = _positionBall.Y+ deplacement.Y;
-                //BallCollision(Mx, My);
 
                 if (BallCollision(Mx, My) && _positionBall.X > Mx)
-                {
-                    _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
-                    //deplacement.X = -deplacement.X;
-                    //_ball.Update(deltaSeconds);
-
+                {   _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.X < 0)
-                {
-                    _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
-                    //deplacement.X = -deplacement.X;
-                    //_ball.Update(deltaSeconds);
+                {   _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y > My)
                 {
                     _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
-                    //deplacement.Y = -deplacement.Y;
-                    //_ball.Update(deltaSeconds);
+                    _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y < 0)
-                {   //deplacement.Y = -deplacement.Y;
-                    _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
-                    //_ball.Update(deltaSeconds);
+                {   _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    _ball.Update(20000);
                 }
 
             }
-
             //////////////////////////////////////////////////////////////////////////////////////////////////
             base.Update(gameTime);
         }
@@ -291,7 +278,7 @@ namespace Project1
         }
         public void PourColision1(string normal, string super)
         {
-            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
+            float walkSpeed = deltaSeconds * _vitessePerso; 
             //Console.WriteLine($"Position X : {_positionPerso.X} \nPosition Y : {_positionPerso.Y}");
             String animation = "normal";
 
