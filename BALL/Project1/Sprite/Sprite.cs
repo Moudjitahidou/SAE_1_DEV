@@ -198,6 +198,7 @@ namespace Project1.Sprite
                     _positionPerso.X -= walkSpeed;
             }
         }
+
         
         private bool IsCollision(ushort x, ushort y)
         {

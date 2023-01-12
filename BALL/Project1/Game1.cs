@@ -36,7 +36,7 @@ namespace Project1
         private int _sensPerso;
         private int _vitessePerso;
         float deltaSeconds;
-        private SpriteFont _font;
+        //private SpriteFont _font;
 
         public Game1()
         {
@@ -134,7 +134,7 @@ namespace Project1
                     _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.X < 0)
-                {   _positionBall.X = _positionBall.X - deplacement.X /*+ _sensPerso * _vitessePerso-50 * deltaSeconds*/;
+                {   _positionBall.X = _positionBall.X - deplacement.X/*+ _sensPerso * _vitessePerso-50 * deltaSeconds*/;
                     _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y > My)
@@ -368,6 +368,13 @@ namespace Project1
             return false;
 
         }
-        
+        /*private bool ColisionAvecJoueur(AnimatedSprite object1, AnimatedSprite object2)
+        {
+            if (object1.X +T)
+            {
+                
+            }
+
+        }*/
     }
     }
