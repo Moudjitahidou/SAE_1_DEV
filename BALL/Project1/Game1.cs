@@ -36,6 +36,7 @@ namespace Project1
         private int _sensPerso;
         private int _vitessePerso;
         float deltaSeconds;
+        private SpriteFont _font;
 
         public Game1()
         {
@@ -74,9 +75,10 @@ namespace Project1
             _ball = new AnimatedSprite(spriteBall);///////ball
             
 
-
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour 
             mapLine = _tiledMap.GetLayer<TiledMapTileLayer>("midline");
+
+            _font = Content.Load<SpriteFont>("Font");
         }
 
         protected override void Update(GameTime gameTime)
@@ -124,24 +126,24 @@ namespace Project1
                 int x = Hasard.Next(60, 400);
                 _positionBall = new Vector2(x, Hasard.Next(10,450));
                 Vector2F deplacement = new Vector2F((float)0.02,(float)0.02);
-                ushort Mx = (ushort)(_positionBall.X / _tiledMap.TileWidth);
-                ushort My = (ushort)(_positionBall.Y / _tiledMap.TileHeight + 0.5);
+                ushort Mx = (ushort)(_positionBall.X / _tiledMap.TileWidth +0.5);
+                ushort My = (ushort)(_positionBall.Y / _tiledMap.TileHeight +0.5);
 
                 if (BallCollision(Mx, My) && _positionBall.X > Mx)
-                {   _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                {   _positionBall.X = _positionBall.X - deplacement.X/*+ _sensPerso * _vitessePerso-50 *  deltaSeconds*/;
                     _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.X < 0)
-                {   _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                {   _positionBall.X = _positionBall.X - deplacement.X /*+ _sensPerso * _vitessePerso-50 * deltaSeconds*/;
                     _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y > My)
                 {
-                    _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    _positionBall.Y = _positionBall.Y - deplacement.Y /*+ _sensPerso * _vitessePerso-50 * deltaSeconds*/;
                     _ball.Update(20000);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y < 0)
-                {   _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                {   _positionBall.Y = _positionBall.Y -deplacement.Y /*+ _sensPerso * _vitessePerso-50 * deltaSeconds*/;
                     _ball.Update(20000);
                 }
 
@@ -160,7 +162,10 @@ namespace Project1
             _spriteBatch.Draw(_perso, _positionPerso);
             _spriteBatch.Draw(_perso1, _positionPerso1);
             _spriteBatch.Draw(_ball, _positionBall);
+
             _spriteBatch.End();
+
+
 
             base.Draw(gameTime);
         }
@@ -363,5 +368,6 @@ namespace Project1
             return false;
 
         }
+
     }
     }
