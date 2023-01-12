@@ -23,6 +23,7 @@ namespace Project1
         private Vector2 _positionPerso;
         private Vector2 _positionPerso1;
         private Vector2 _positionBall;///////ball
+        private bool _isPlaying;
 
         private AnimatedSprite _perso;
         private AnimatedSprite _perso1;
@@ -52,7 +53,7 @@ namespace Project1
             _positionPerso = new Vector2(250, 405);
             _positionPerso1 = new Vector2(250, 65);
             _positionBall = new Vector2(250, 200);
-           
+            _isPlaying=false;
             _vitessePerso = 100;
             Hasard = new Random();
 
@@ -71,7 +72,7 @@ namespace Project1
             _perso = new AnimatedSprite(spriteSheet);
             _perso1 = new AnimatedSprite(spriteSheet);
             _ball = new AnimatedSprite(spriteBall);///////ball
-            var ballTexture= 
+            
 
 
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour 
@@ -107,9 +108,13 @@ namespace Project1
                 PourColision1("red_normal_strike", "red_super_strike");
             }
             /////////////////////////////////////////////////////////////////////////////////////////////
-            Random Hasard = new Random();
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                _isPlaying = true;
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+                _isPlaying = false;
+            Random Hasard = new Random(); 
             
-            if (_keyboardState.IsKeyDown(Keys.Space))
+            if (_isPlaying==true)
             {
                 _tiledMapRenderer.Update(gameTime);
                 _ball.Play("anime1");
@@ -129,26 +134,26 @@ namespace Project1
 
                 if (BallCollision(Mx, My) && _positionBall.X > Mx)
                 {
-                    _positionBall.X = _positionBall.X - deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
                     //deplacement.X = -deplacement.X;
                     //_ball.Update(deltaSeconds);
 
                 }
                 if (BallCollision(Mx, My) && _positionBall.X < 0)
                 {
-                    _positionBall.X = _positionBall.X - deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
+                    _positionBall.X = _positionBall.X + deplacement.X + _sensPerso * _vitessePerso * deltaSeconds;
                     //deplacement.X = -deplacement.X;
                     //_ball.Update(deltaSeconds);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y > My)
                 {
-                    _positionBall.Y = _positionBall.Y - deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
                     //deplacement.Y = -deplacement.Y;
                     //_ball.Update(deltaSeconds);
                 }
                 if (BallCollision(Mx, My) && _positionBall.Y < 0)
                 {   //deplacement.Y = -deplacement.Y;
-                    _positionBall.Y = _positionBall.Y - deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
+                    _positionBall.Y = _positionBall.Y + deplacement.Y + _sensPerso * _vitessePerso * deltaSeconds;
                     //_ball.Update(deltaSeconds);
                 }
 
