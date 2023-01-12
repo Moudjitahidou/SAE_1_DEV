@@ -78,7 +78,7 @@ namespace Project1
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("mur");///pour 
             mapLine = _tiledMap.GetLayer<TiledMapTileLayer>("midline");
 
-            _font = Content.Load<SpriteFont>("Font");
+            //_font = Content.Load<SpriteFont>("Font");
         }
 
         protected override void Update(GameTime gameTime)
@@ -368,6 +368,6 @@ namespace Project1
             return false;
 
         }
-
+        
     }
     }
