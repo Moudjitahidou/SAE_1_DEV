@@ -175,7 +175,7 @@ namespace Project1
         /// </summary>
 
 
-        public void J2Deplacement()
+        public void J2Deplacement() // permet le controle des touche pour guider le joueur
         {
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
